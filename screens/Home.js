@@ -16,11 +16,12 @@ const YELP_API_KEY =
     '4VBm58bz9JlkQlnd0qAikILTGgSDZF84ZGf3N6Fy6oQdOosYjiy_5H9DQ-3zMy6GI-wlpvGlKH9_A-Qdk-c5VtoSnuG8L3s5H-Pr_IzM7wAJGgZHNb8mG8jZd6jrYXYx';
 
 const Home = () => {
-    const [restaurantData, setRestaurantData] = useState('');
+    const [restaurantData, setRestaurantData] = useState([]);
+    const [city, setCity] = useState('San Francisco');
+    const [activeTab, setActiveTab] = useState('Delivery');
 
     const getRestaurantsFromYelp = () => {
-        const yelpUrl =
-            'https://api.yelp.com/v3/businesses/search?term=restaurant&location=SanDiego';
+        const yelpUrl = `https://api.yelp.com/v3/businesses/search?term=restaurant&location=${city}`;
 
         const apiOptions = {
             headers: {
@@ -29,18 +30,24 @@ const Home = () => {
         };
         return fetch(yelpUrl, apiOptions)
             .then((res) => res.json())
-            .then((json) => setRestaurantData(json.businesses));
+            .then((json) =>
+                setRestaurantData(
+                    json.businesses.filter((business) =>
+                        business.transactions.includes(activeTab.toLowerCase())
+                    )
+                )
+            );
     };
 
     useEffect(() => {
         getRestaurantsFromYelp();
-    }, []);
+    }, [city, activeTab]);
 
     return (
         <SafeAreaView style={styles.AndroidSafeArea}>
             <View style={styles.HeaderView}>
-                <HeaderTabs />
-                <SearchBar />
+                <HeaderTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                <SearchBar cityHandler={setCity} />
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Categories />
