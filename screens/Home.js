@@ -8,11 +8,17 @@ import {
 } from 'react-native';
 import React from 'react';
 import HeaderTabs from '../components/HeaderTabs';
+import SearchBar from '../components/SearchBar';
+import Categories from '../components/Categories';
 
 const Home = () => {
     return (
         <SafeAreaView style={styles.AndroidSafeArea}>
-            <HeaderTabs />
+            <View style={styles.HeaderView}>
+                <HeaderTabs />
+                <SearchBar />
+            </View>
+            <Categories />
         </SafeAreaView>
     );
 };
@@ -20,8 +26,12 @@ const Home = () => {
 const styles = StyleSheet.create({
     AndroidSafeArea: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#eee',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
+    HeaderView: {
+        backgroundColor: 'white',
+        padding: 15,
     },
 });
 export default Home;
