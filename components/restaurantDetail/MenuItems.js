@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import { Divider } from 'react-native-elements';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const foods = [
     {
@@ -43,10 +44,21 @@ const MenuItems = () => {
             {foods.map((food, index) => (
                 <View key={index}>
                     <View style={styles.menuItem}>
+                        <BouncyCheckbox
+                            iconStyle={{
+                                borderColor: 'lightgray',
+                                borderRadius: 0,
+                            }}
+                            fillColor="green"
+                        />
                         <FoodInfo food={food} />
                         <FoodImage food={food} />
                     </View>
-                    <Divider width={0.5} orientation="vertical" />
+                    <Divider
+                        width={0.5}
+                        orientation="vertical"
+                        style={{ marginHorizontal: 20 }}
+                    />
                 </View>
             ))}
         </ScrollView>
