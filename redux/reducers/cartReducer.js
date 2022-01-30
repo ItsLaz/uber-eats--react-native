@@ -8,14 +8,11 @@ let cartReducer = (state = defaultState, action) => {
             let newState = { ...state };
 
             if (action.payload.checkboxValue) {
-                console.log('add to cart');
-
                 newState.selectedItems = {
                     items: [...newState.selectedItems.items, action.payload],
                     restaurantName: action.payload.restaurantName,
                 };
             } else {
-                console.log('remove from cart');
                 newState.selectedItems = {
                     items: [
                         ...newState.selectedItems.items.filter(
